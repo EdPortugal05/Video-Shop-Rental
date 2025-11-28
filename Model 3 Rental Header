@@ -1,0 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+
+public class RentalHeader
+{
+    public int Id { get; set; }
+
+    [Required]
+    public int CustomerId { get; set; }
+
+    public DateTime DateRented { get; set; } = DateTime.Now;
+    public DateTime? DateReturned { get; set; }
+
+    public Customer Customer { get; set; }
+    public List<RentalDetail> RentalDetails { get; set; } = new();
+}
