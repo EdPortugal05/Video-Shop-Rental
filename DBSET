@@ -1,0 +1,29 @@
+using Microsoft.EntityFrameworkCore;
+using VideoShopAdmin.Models;
+
+namespace VideoShopAdmin.Data
+{
+    public class VideoContext : DbContext
+    {
+        public VideoContext(DbContextOptions<VideoContext> options) : base(options) { }
+
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<RentalHeader> RentalHeaders { get; set; }
+        public DbSet<RentalDetail> RentalDetails { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RentalHeader>()
+                .HasMany(r => r.RentalDetails)
+                .WithOne(d => d.RentalHeader)
+                .HasForeignKey(d => d.RentalHeaderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RentalDetail>()
+                .HasOne(d => d.Movie)
+                .WithMany()
+                .HasForeignKey(d => d.MovieId);
+        }
+    }
+}
