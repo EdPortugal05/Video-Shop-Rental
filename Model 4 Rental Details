@@ -1,0 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+
+public class RentalDetail
+{
+    public int Id { get; set; }
+
+    [Required]
+    public int RentalHeaderId { get; set; }
+
+    [Required]
+    public int MovieId { get; set; }
+
+    public bool IsReturned { get; set; } = false;
+
+    public RentalHeader RentalHeader { get; set; }
+    public Movie Movie { get; set; }
+}
